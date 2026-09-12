@@ -12,8 +12,8 @@ class DataValidationTrainingPipeline:
     def initiate_data_validation(self):
         config=ConfigurationManager()
         data_validation_config = config.get_data_validation_config()
-        data_ingestion = DataValidation(config=data_validation_config)
-        data_ingestion.validate_all_columns()
+        data_validation = DataValidation(config=data_validation_config)
+        data_validation.validate_all_columns()
 
 
 # if __name__ == "__main__":
