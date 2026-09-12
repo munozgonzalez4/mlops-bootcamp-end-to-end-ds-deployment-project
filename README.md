@@ -19,7 +19,7 @@ setup.py: useful to wrap entire project as a package
 4. Model training
 5. Model evaluation
 
-## Workflows:
+## Workflow to create a pipeline:
 1. Update config/config.yaml
 2. Update schema.yaml
 3. Update params.yaml
