@@ -1,4 +1,5 @@
 import yaml
+from pathlib import Path
 from box import ConfigBox # ConfigBox is a class from the box library that allows for dot notation access to dictionary keys, making it easier to work with nested configurations.
 from box.exceptions import BoxValueError # BoxValueError is an exception raised when there is an error accessing values in a ConfigBox object.
 from ensure import ensure_annotations
@@ -9,12 +10,12 @@ from src.ds_deployment_project import logger
 
 
 @ensure_annotations # Decorator to ensure that the function arguments and return types match the specified annotations
-def read_yaml(path_to_yaml: str) -> ConfigBox:
+def read_yaml(path_to_yaml: Path) -> ConfigBox:
     """
     Reads a yaml file and returns a ConfigBox object.
 
     Args:
-        path_to_yaml (str): Path to the yaml file.
+        path_to_yaml (Path): Path to the yaml file.
 
     Raises:
         ValueError: If the yaml file is empty or cannot be read.
@@ -24,11 +25,12 @@ def read_yaml(path_to_yaml: str) -> ConfigBox:
         ConfigBox: A ConfigBox object containing the contents of the yaml file.
     """
     try:
-        with open(path_to_yaml) as yaml_file:
+        with open(path_to_yaml, "r", encoding="utf-8") as yaml_file:
             content = yaml.safe_load(yaml_file)
 
         if content is None:
-            raise ValueError(f"YAML file is empty: {path_to_yaml}")
+            logger.warning("YAML file is empty: %s; returning empty configuration.", path_to_yaml)
+            return ConfigBox({})
 
         logger.info("yaml file: %s loaded successfully", path_to_yaml)
         return ConfigBox(content)
