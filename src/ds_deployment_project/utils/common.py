@@ -3,6 +3,7 @@ from box import ConfigBox # ConfigBox is a class from the box library that allow
 from box.exceptions import BoxValueError # BoxValueError is an exception raised when there is an error accessing values in a ConfigBox object.
 from ensure import ensure_annotations
 import os
+import joblib
 
 from src.ds_deployment_project import logger
 
@@ -85,3 +86,29 @@ def load_json(path: str) -> dict:
         data = json.load(f)
     logger.info("JSON file loaded: %s", path)
     return ConfigBox(data)
+
+
+@ensure_annotations
+def save_bin(path: str, data: object):
+    """
+    Saves an object as a binary file using pickle.
+
+    Args:
+        path (str): Path to save the binary file.
+        data (object): Object to save as binary.
+    """
+    joblib.dump(data, path)
+    logger.info("Binary file saved: %s", path)
+
+
+@ensure_annotations
+def load_bin(path: str) -> object:
+    """
+    Loads a binary file and returns its contents.
+
+    Args:
+        path (str): Path to the binary file.
+    """
+    data = joblib.load(path)
+    logger.info("Binary file loaded: %s", path)
+    return data
