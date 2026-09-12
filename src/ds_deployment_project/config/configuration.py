@@ -3,7 +3,7 @@ from pathlib import Path
 from src.ds_deployment_project.constants import CONFIG_FILE_PATH, PARAMS_FILE_PATH, SCHEMA_FILE_PATH
 from src.ds_deployment_project.utils.common import read_yaml, create_directories
 
-from src.ds_deployment_project.entity.config_entity import (DataIngestionConfig, DataValidationConfig, DataTransformationConfig)
+from src.ds_deployment_project.entity.config_entity import (DataIngestionConfig, DataValidationConfig, DataTransformationConfig, ModelTrainingConfig)
 
 
 class ConfigurationManager:
@@ -54,3 +54,22 @@ class ConfigurationManager:
         )
 
         return data_transformation_config
+
+    def get_model_training_config(self) -> ModelTrainingConfig:
+        config = self.config.model_training
+        params = self.params.ElasticNet
+        schema = self.schema.TARGET_COLUMN.name
+
+        create_directories([config.root_dir])
+
+        model_training_config = ModelTrainingConfig(
+            root_dir=Path(config.root_dir),
+            train_data_path=Path(config.train_data_path),
+            test_data_path=Path(config.test_data_path),
+            model_name=config.model_name,
+            alpha=params.alpha,
+            l1_ratio=params.l1_ratio,
+            target_column=schema
+        )
+
+        return model_training_config
