@@ -42,7 +42,13 @@ For model evaluation, requires connecting to Dagshub
 - Integrate github repo
 - Configure MLflow tracking URI and DVC secret access keys:
     - Set environment variables that are available in experiments (MLflow tracking URI) and data (setup credentials)
+    - Initially, those are in the components/model_evaluation.py, but this will change in the next step
 
 
 ##
+
+Final step: Training and Prediction Pipeline with Flask App
+- Creation of prediction.py script in pipelines folder
+- Creation of app.py for the Flask API
+
 setup.py: useful to wrap entire project as a package
