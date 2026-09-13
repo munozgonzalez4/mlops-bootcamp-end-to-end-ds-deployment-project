@@ -3,6 +3,7 @@ from src.ds_deployment_project.pipeline.data_ingestion import DataIngestionTrain
 from src.ds_deployment_project.pipeline.data_validation import DataValidationTrainingPipeline
 from src.ds_deployment_project.pipeline.data_transformation import DataTransformationTrainingPipeline
 from src.ds_deployment_project.pipeline.model_training import ModelTrainingPipeline
+from src.ds_deployment_project.pipeline.model_evaluation import ModelEvaluationPipeline
 
 STAGE_NAME = "Data Ingestion stage"
 try:
@@ -34,11 +35,21 @@ except Exception as e:
     logger.exception(e)
     raise e
 
-STAGE_NAME = "Model training stage"
+STAGE_NAME = "Model Training stage"
 try: 
     logger.info(f"Stage {STAGE_NAME} started")
     model_trainer = ModelTrainingPipeline()
     model_trainer.initiate_model_training()
+    logger.info(f"Stage {STAGE_NAME} completed!")
+except Exception as e:
+    logger.exception(e)
+    raise e
+
+STAGE_NAME = "Model Evaluation stage"
+try: 
+    logger.info(f"Stage {STAGE_NAME} started")
+    model_evaluation = ModelEvaluationPipeline()
+    model_evaluation.initiate_model_evaluation()
     logger.info(f"Stage {STAGE_NAME} completed!")
 except Exception as e:
     logger.exception(e)

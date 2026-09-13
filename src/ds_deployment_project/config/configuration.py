@@ -3,7 +3,7 @@ from pathlib import Path
 from src.ds_deployment_project.constants import CONFIG_FILE_PATH, PARAMS_FILE_PATH, SCHEMA_FILE_PATH
 from src.ds_deployment_project.utils.common import read_yaml, create_directories
 
-from src.ds_deployment_project.entity.config_entity import (DataIngestionConfig, DataValidationConfig, DataTransformationConfig, ModelTrainingConfig)
+from src.ds_deployment_project.entity.config_entity import (DataIngestionConfig, DataValidationConfig, DataTransformationConfig, ModelTrainingConfig, ModelEvaluationConfig)
 
 
 class ConfigurationManager:
@@ -73,3 +73,22 @@ class ConfigurationManager:
         )
 
         return model_training_config
+
+    def get_model_evaluation_config(self) -> ModelEvaluationConfig:
+        config = self.config.model_evaluation
+        params = self.params.ElasticNet
+        schema = self.schema.TARGET_COLUMN.name
+
+        create_directories([config.root_dir])
+
+        model_evaluation_config = ModelEvaluationConfig(
+            root_dir=Path(config.root_dir),
+            test_data_path=Path(config.test_data_path),
+            model_path=Path(config.model_path),
+            all_params=params,
+            metric_file_name=config.metric_file_name,
+            target_column=schema,
+            mlflow_uri="https://dagshub.com/munozgonzalez4/mlops-bootcamp-end-to-end-ds-deployment-project.mlflow"
+        )
+
+        return model_evaluation_config

@@ -10,14 +10,12 @@ Logging is set up in __init__ of src/ds_deployment_project
 
 utils/common.py for common functions 
 
-setup.py: useful to wrap entire project as a package
-
 ## Workflows: ML Pipeline
 1. Data ingestion
 2. Data validation
 3. Data transformation
 4. Model training
-5. Model evaluation
+5. Model evaluation -> using MLflow
 
 ## Workflow to create a pipeline:
 1. Update config/config.yaml
@@ -36,3 +34,15 @@ setup.py: useful to wrap entire project as a package
 - In general the src/project/utils/common.py are used, along with the src/project/constants/__init__.py
 - In general config/config.yaml is used to define paths of the pipeline
 - Note: for this example, params.yaml and schema.yaml are not used yet
+
+##
+
+For model evaluation, requires connecting to Dagshub
+- Open Dagshub in browser and connect using github credentials
+- Integrate github repo
+- Configure MLflow tracking URI and DVC secret access keys:
+    - Set environment variables that are available in experiments (MLflow tracking URI) and data (setup credentials)
+
+
+##
+setup.py: useful to wrap entire project as a package
